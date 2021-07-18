@@ -54,6 +54,10 @@ some position, you can never make a placement in an earlier position.)
 
 Examples with N = 4, K = 3:
 
+We won't draw the whole tree, but we can look at a few individual nodes to get
+an idea of what the tree might look like (and to make sure the idea I've
+described is comprehensible!)
+
 **`????` has 12 children:**
 - You can place an `A` in any position:
     - `A???`, `?A??`, `??A?`, `???A`
