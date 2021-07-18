@@ -1,5 +1,6 @@
 run:
-	python3 s.py
+	python3 main.py
+
 test:
 	clear
-	python3 -m doctest s.py
+	python3 -m doctest common.py
