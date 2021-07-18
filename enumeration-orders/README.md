@@ -92,6 +92,34 @@ child will necessarily have fewer children.
 This repo explores just how many more nodes an option-order enumeration tree
 has when compared to a position-order enumeration tree.
 
+The option-order enumeration definitely requires more nodes, but the
+difference is maybe smaller than one might expect. Here are some of the
+results from this exploration.
+
+```console
+$ python3 main.py
+Length (N) = 4
+Options = ABCD (K = 4)
+
+Position order:
+  Nodes: 341	Results: 256
+
+Option order:
+  Nodes: 431	Results: 256
+```
+
+```console
+$ python3 main.py ABCD 8
+Length (N) = 8
+Options = ABCD (K = 4)
+
+Position order:
+  Nodes: 87,381	Results: 65,536
+
+Option order:
+  Nodes: 124,511	Results: 65,536
+```
+
 ## Why?
 
 I'm thinking about [backtracking search][backtracking], used for solving
@@ -115,7 +143,7 @@ Such "position-order backtracking" might not be possible (there may not be a
 concept of "position-order" here), but it should be possible to do an
 "option-order backtracking."
 
-But it's very feasible that that would take too long! I might be barking down
+But it's very possible that that would take too long! I might be barking down
 the completely wrong tree. 🌳
 
 
