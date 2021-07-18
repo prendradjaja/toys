@@ -35,8 +35,11 @@ Before moving on to option-order enumeration, let's look at one more example
 of position-order. Say N = 5 and K = 3. We won't draw the whole tree this
 time, but again we'll look at a single node.
 
-What are the children of node `AC???`? The next character can be any of {A, B,
-C}, so the children ane `ACA??`, `ACB??`, `ACC??`.
+**What are the children of node `AC???`?**
+- `ACA??`, `ACB??`, `ACC??`
+
+So this node has 3 children. (This corresponds to each of the K = 3 choices
+for the next character.)
 
 ----
 
@@ -51,7 +54,7 @@ some position, you can never make a placement in an earlier position.)
 
 Examples with N = 4, K = 3:
 
-`????` has 12 children:
+**`????` has 12 children:**
 - You can place an `A` in any position:
     - `A???`, `?A??`, `??A?`, `???A`
 - You can place a `B` in any position:
@@ -59,7 +62,7 @@ Examples with N = 4, K = 3:
 - You can place a `C` in any position:
     - `C???`, `?C??`, `??C?`, `???C`
 
-`?A??` has these children:
+**`?A??` has these children:**
 - You can place an `A` in any **later** position:
     - `?AA?`, `?A?A`
 - You can place a `B` in any position:
@@ -67,7 +70,7 @@ Examples with N = 4, K = 3:
 - You can place a `C` in any position:
     - `CA??`, `?AC?`, `?A?C`
 
-`?B??` has these children:
+**`?B??` has these children:**
 - You can't place an `A` (because you've already placed a `B`)
 - You can place a `B` in any later position:
     - `?BB?` ,`?B?B`
