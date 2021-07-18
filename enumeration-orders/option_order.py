@@ -1,3 +1,10 @@
+# This is sufficiently complicated that it's not unlikely there's a bug in it
+# somewhere. I'm only somewhat confident that this is correct (or correct
+# enough) such that I can use it for exploring tree size (see README.md), but
+# if I ever use this code to do an option-order enumeration, I probably will
+# want to do some thorough testing.
+
+
 from types import SimpleNamespace as obj
 
 
@@ -31,7 +38,6 @@ def children(node, options, length):
     if len(options) == 0:
         return
 
-    # option 0
     if len(node) == 0:
         option = options[0]
         possible_positions = unoccupied
@@ -40,17 +46,15 @@ def children(node, options, length):
         possible_positions = [pos for pos in unoccupied if pos > last_position]
     yield from children_helper(node, option, possible_positions)
 
-    other_options = options[1:]
-
-    if len(other_options) == 0:
+    if len(options) == 1:
         return
-    elif len(other_options) == 1:
-        other_option = other_options[0]
-        yield node + tuple((other_options, pos) for pos in unoccupied)
-    else:
-        # other options
-        for other_option in other_options:
-            yield from children_helper(node, other_option, unoccupied)
+
+    first_option, *other_options, last_option = options
+
+    for other_option in other_options:
+        yield from children_helper(node, other_option, unoccupied)
+
+    yield node + tuple((last_option, pos) for pos in unoccupied)
 
 
 def children_helper(node, option, possible_positions):
