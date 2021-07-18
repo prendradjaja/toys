@@ -34,11 +34,11 @@ Before moving on to option-order enumeration, let's look at one more example
 of position-order. Say N = 5 and K = 3. We won't draw the whole tree this
 time, but again we'll look at a single node.
 
-**What are the children of node `AC???`?**
+**What are the children of node `AC???`?** We know from above that it must
+have K = 3 children. Here they are:
 - `ACA??`, `ACB??`, `ACC??`
 
-So this node has 3 children. (This corresponds to each of the K = 3 choices
-for the next character.)
+Let's move on.
 
 ----
 
