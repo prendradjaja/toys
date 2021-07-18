@@ -22,8 +22,7 @@ The leaves of the tree are the completed strings.
 
 (In terms of performance, this is probably not the best approach for solving
 the enumeration problem, since we have to walk the whole tree and we're only
-interested in the leaf nodes. See below for my motivation for looking at
-this.)
+interested in the leaf nodes. But this concept is still useful, as we'll see.)
 
 Let's zoom in on just one node. At the node `A?`, we want to decide what the
 next character will be, and we have two choices, so there are two children.
