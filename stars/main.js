@@ -11,8 +11,6 @@ for (let i = 0; i < 25; i++) {
 }
 
 function star(n, k, cx, cy) {
-  // To fix: Use a polygon to fix the issue with the top spoke (obvious on
-  // star(15,7) but more subtle on the other stars)
   if (!cx) {
     ([cx, cy] = centers.shift());
   }
@@ -31,7 +29,7 @@ function star(n, k, cx, cy) {
     const i = (j * k) % n;
     ctx.lineTo(...points[i]);
   }
-  ctx.lineTo(...points[0]);
+  ctx.closePath();
   ctx.stroke();
 }
 
