@@ -15,7 +15,7 @@ def exp1(k, n):  # Exponentiation by squaring
     #     37 = 0b100101
     #
     #     k^37 = k^32    * k^4     * k^1
-    #     k^37 = k^(2^5) * k^(2^5) * k^(2^0)
+    #     k^37 = k^(2^5) * k^(2^2) * k^(2^0)
     #
     # We can generate these factors sequentially by repeatedly squaring k:
     #
