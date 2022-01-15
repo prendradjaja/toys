@@ -40,8 +40,6 @@ def exp2(k, n):
 
 
 if __name__ == '__main__':
-    import random
-
     print('Running tests...')
     for k in range(1, 100):
         for n in range(1, 100):
