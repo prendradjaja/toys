@@ -12,8 +12,7 @@ def exp1(k, n):  # Exponentiation by squaring
     # To see this, consider the binary representation of n. For example, if n
     # = 37, then:
     #
-    #     k^37 = ?
-    #     37 == 0b100101
+    #     37 = 0b100101
     #
     #     k^37 = k^32    * k^4     * k^1
     #     k^37 = k^(2^5) * k^(2^5) * k^(2^0)
