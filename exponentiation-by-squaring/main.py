@@ -1,10 +1,9 @@
-'''
-TODO:
-- Fewer multiplications is possible! How?
-  https://projecteuler.net/problem=122
-- Use this for AoC 2021.06 "Lanternfish." How fast is it?
-  https://adventofcode.com/2021/day/6
-'''
+# TODO:
+# - Fewer multiplications is possible! How?
+#   https://projecteuler.net/problem=122
+# - Use this for AoC 2021.06 "Lanternfish." How fast is it?
+#   https://adventofcode.com/2021/day/6
+
 
 def my_exp(k, n):
     # k^n can be decomposed into factors of the form k^(2^p).
