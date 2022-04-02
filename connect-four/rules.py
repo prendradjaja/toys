@@ -29,45 +29,36 @@ def is_game_over(gamestate):
         ('win', 2)
         ('draw', None)
     '''
-    ONES = (1, 1, 1, 1)
-    TWOS = (2, 2, 2, 2)
+    def has_vertical_win(board):
+        for col in board:
+            for each in consecutives(col, 4):
+                if each == (1, 1, 1, 1):
+                    return ('win', 1)
+                if each == (2, 2, 2, 2):
+                    return ('win', 2)
+        return False
 
     # Check for vertical wins
-    for col in gamestate.board:
-        for each in consecutives(col, 4):
-            if each == ONES:
-                return ('win', 1)
-            if each == TWOS:
-                return ('win', 2)
+    if result := has_vertical_win(gamestate.board):
+        return result
 
     # Check for horizontal wins
-    for col in transpose(gamestate.board):
-        for each in consecutives(col, 4):
-            if each == ONES:
-                return ('win', 1)
-            if each == TWOS:
-                return ('win', 2)
+    if result := has_vertical_win(transpose(gamestate.board)):
+        return result
 
     # Check for diagonal wins in one direction
     board = _to_mutable(gamestate.board)
     _stagger_up(board)
-    for col in transpose(board):
-        for each in consecutives(col, 4):
-            if each == ONES:
-                return ('win', 1)
-            if each == TWOS:
-                return ('win', 2)
+    if result := has_vertical_win(transpose(board)):
+        return result
 
     # Check for diagonal wins in the other direction
     board = _to_mutable(gamestate.board)
     _stagger_down(board)
-    for col in transpose(board):
-        for each in consecutives(col, 4):
-            if each == ONES:
-                return ('win', 1)
-            if each == TWOS:
-                return ('win', 2)
+    if result := has_vertical_win(transpose(board)):
+        return result
 
+    # Check if the board is full
     if len(get_moves(gamestate)) == 0:
         return ('draw', None)
 
