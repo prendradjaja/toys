@@ -6,11 +6,13 @@ from util import consecutives, listify, transpose
 
 
 GameState = namedtuple('GameState', 'turn board')
-GameState.turn.__doc__ = '''Type: 1 | 2
-Which player (1 or 2) is about to move.'''
-GameState.board.__doc__ = '''Type: (0 | 1 | 2)[][]
-Indexed board[col][row], where row=0 is the bottom. 0 represents an empty
-space.'''
+GameState.turn.__doc__ = '''- Type: 1 | 2
+- Which player (1 or 2) is about to move.'''
+GameState.board.__doc__ = '''- Type: (0 | 1 | 2)[][]
+- Indexed board[x][y], where y=0 is the bottom of the board.
+- board[x][y] == 0 if that space is empty
+              == 1 represents a player 1 chip
+              == 2 represents a player 2 chip'''
 
 
 def get_initial_state():
@@ -20,22 +22,23 @@ def get_initial_state():
     )
 
 
+GameOver = namedtuple('GameOver', 'type winner')
 def is_game_over(gamestate):
     '''
     Return falsy if not game over.
 
     Return truthy if game over. One of:
-        ('win', 1)
-        ('win', 2)
-        ('draw', None)
+        GameOver('win', 1)
+        GameOver('win', 2)
+        GameOver('draw', None)
     '''
     def has_vertical_win(board):
         for col in board:
             for each in consecutives(col, 4):
                 if each == (1, 1, 1, 1):
-                    return ('win', 1)
+                    return GameOver('win', 1)
                 if each == (2, 2, 2, 2):
-                    return ('win', 2)
+                    return GameOver('win', 2)
         return False
 
     # Check for vertical wins
@@ -60,9 +63,20 @@ def is_game_over(gamestate):
 
     # Check if the board is full
     if len(get_moves(gamestate)) == 0:
-        return ('draw', None)
+        return GameOver('draw', None)
 
     return False
+
+
+# TODO This isn't really a "rules" function -- move to a separate file? Rename
+# this file?
+def is_win(gamestate):
+    '''
+    Return truthy if win for the last player to move
+    '''
+    last_player = _other(gamestate.turn)
+    gameover = is_game_over(gamestate)
+    return gameover and gameover.type == 'win' and gameover.winner == last_player
 
 
 def make_move(gamestate, x):
@@ -102,6 +116,13 @@ def show(gamestate):
     for row in reversed(transpose(board)):
         print(' '.join(chipstr(x) for x in row))
     print()
+
+
+# TODO This isn't really a "rules" function -- move to a separate file? Rename
+# this file?
+def in_bounds(pos):
+    x, y = pos
+    return 0 <= x < COLS and 0 <= y < ROWS
 
 
 # Private functions ----------------------------------------------------------
