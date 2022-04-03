@@ -23,6 +23,7 @@ def main():
     print('P2:', strategies[2].__name__)
 
     counts = Counter()
+    final_positions = []
     for _ in range(n):
         gamestate = get_initial_state()
         while not is_game_over(gamestate):
@@ -30,9 +31,11 @@ def main():
             gamestate = make_move(gamestate, move)
         result = is_game_over(gamestate)
         counts[result] += 1
+        final_positions.append(gamestate)
 
-    print('\nFinal position of the last game:')
-    show(gamestate)
+    print('\nFinal positions of three arbitrary games:')
+    for each in final_positions[:3]:
+        show(each)
 
     print('Results:')
     result_names = {

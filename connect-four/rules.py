@@ -101,6 +101,8 @@ def get_moves(gamestate):
             yield y
 
 
+# TODO This isn't really a "rules" function -- move to a separate file? Rename
+# this file?
 def show(gamestate):
     board = gamestate.board
     def chipstr(chip):
