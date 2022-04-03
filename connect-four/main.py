@@ -33,7 +33,7 @@ def main():
         counts[result] += 1
         final_positions.append(gamestate)
 
-    print('\nFinal positions of three arbitrary games:')
+    print('\nFinal positions of some sample games:')
     for each in final_positions[:3]:
         show(each)
 
