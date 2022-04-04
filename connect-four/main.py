@@ -10,6 +10,7 @@ from strategies import (
     simple1,
     simple2,
     simple3,
+    avoid_winning,
 )
 
 from util import chunks
@@ -27,6 +28,7 @@ STRATEGIES = [
     # simple1,
     # simple2,
     # simple3,
+    # avoid_winning,
 ]
 
 assert len(STRATEGIES) == 2, "STRATEGIES should be 2 items long (P1's strategy, then P2's strategy)"

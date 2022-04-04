@@ -6,6 +6,19 @@ from constants import DIRECTIONS
 from gridlib import gridplane as gridlib
 
 
+def avoid_winning(gamestate):
+    def is_winning(move):
+        after = make_move(gamestate, move)
+        return is_win(after)
+
+    candidates = get_moves(gamestate)
+    non_winning = [m for m in candidates if not is_winning(m)]
+    if non_winning:
+        return random.choice(non_winning)
+    else:
+        return random.choice(candidates)
+
+
 def choose_random_move(gamestate):
     return random.choice(get_moves(gamestate))
 
