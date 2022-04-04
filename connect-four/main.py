@@ -13,17 +13,20 @@ from strategies import (
 from util import chunks
 
 
+# Each player's strategy is set here. Try changing one to choose_minimum_move!
+# You'll see that that strategy is much more effective than
+# choose_random_move.
+strategies = [
+    choose_random_move,
+    choose_random_move,
+]
+
+
 def main():
+    random.seed(1)
     n = 500
 
-    # Each player (1 and 2)'s strategy is set here. Try changing one to
-    # choose_minimum_move! You'll see that that strategy is much more
-    # effective than choose_random_move.
-    strategies = {
-        1: choose_random_move,
-        2: choose_random_move,
-    }
-
+    strategies[:0] = [None]
     print(f'Playing {n} games of Connect Four with these strategies:')
     print('P1:', strategies[1].__name__)
     print('P2:', strategies[2].__name__)
