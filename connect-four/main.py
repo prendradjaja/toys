@@ -12,6 +12,7 @@ from strategies import (
 )
 
 from util import chunks
+from progress import ProgressBar
 
 
 # Each player's strategy is set here. Try changing one to choose_minimum_move!
@@ -38,9 +39,12 @@ def main():
     print('P1:', strategies[1].__name__)
     print('P2:', strategies[2].__name__)
 
+    print()
+    progress = ProgressBar(n)
+
     counts = Counter()
     final_positions = []
-    for _ in range(n):
+    for i in range(n):
         gamestate = get_initial_state()
         while not is_game_over(gamestate):
             move = strategies[gamestate.turn](gamestate)
@@ -48,6 +52,8 @@ def main():
         result = is_game_over(gamestate)
         counts[result] += 1
         final_positions.append(gamestate)
+        progress.show(i)
+    progress.done()
 
     print('\nFinal positions of some sample games:')
     show_multiple(final_positions[:10])

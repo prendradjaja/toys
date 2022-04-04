@@ -1,0 +1,7 @@
+. detect terminal width and adjust MAX_BOARDS_PER_ROW accordingly
+. add win rate tests
+. learn: choose_random_move has a small (3%?) win rate as P1 against simple3. what do these games look like?
+
+Interesting: simple3 beats choose_leftmost_move more quickly than simple2, but
+simple2 beats simple3 -- probably because both avoid "mate in 1" but simple2's
+placements give more flexibility than simple3's.
