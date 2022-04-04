@@ -1,6 +1,7 @@
 from collections import Counter
 import itertools
 import random
+import shutil
 
 from rules import *  # TODO un-star this import?
 from strategies import (
@@ -56,7 +57,7 @@ def main():
     progress.done()
 
     print('\nFinal positions of some sample games:')
-    show_multiple(final_positions[:10])
+    show_multiple(final_positions[:12])
 
     print('Results:')
     result_names = {
@@ -70,12 +71,22 @@ def main():
 
 
 def show_multiple(gamestates):
-    MAX_BOARDS_PER_ROW = 5
     HORIZONTAL_SPACING = 4
 
-    separator = ' ' * HORIZONTAL_SPACING
+    # Calculate max_boards_per_row based on terminal width
+    terminal_width = shutil.get_terminal_size(fallback=80).columns
+    for n in range(8, 1, -1):
+        board_width = COLS * 2 - 1
+        total_width = (board_width * n) + (n-1) * HORIZONTAL_SPACING
+        if total_width <= terminal_width:
+            max_boards_per_row = n
+            break
+    else:
+        max_boards_per_row = 1
 
-    for chunk in chunks(gamestates, MAX_BOARDS_PER_ROW):
+    # Show the boards!
+    separator = ' ' * HORIZONTAL_SPACING
+    for chunk in chunks(gamestates, max_boards_per_row):
         ascii_arts = [to_ascii(gamestate).split('\n') for gamestate in chunk]
         for i in range(len(ascii_arts[0])):
             print(separator.join(art[i] for art in ascii_arts))
