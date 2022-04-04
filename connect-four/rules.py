@@ -98,11 +98,11 @@ def get_moves(gamestate):
 
 def is_win(gamestate):
     '''
-    Return truthy if win for the last player to move
+    Return True if win for the last player to move
     '''
     last_player = _other(gamestate.turn)
     gameover = is_game_over(gamestate)
-    return gameover and gameover.type == 'win' and gameover.winner == last_player
+    return bool(gameover and gameover.type == 'win' and gameover.winner == last_player)
 
 
 def show(gamestate):
