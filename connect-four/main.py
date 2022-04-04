@@ -18,7 +18,7 @@ from progress import ProgressBar
 # Each player's strategy is set here. Try changing one to choose_minimum_move!
 # You'll see that that strategy is much more effective than
 # choose_random_move.
-strategies = [
+STRATEGIES = [
     choose_random_move,
     choose_random_move,
 
@@ -28,16 +28,16 @@ strategies = [
     # simple3,
 ]
 
-assert len(strategies) == 2, "`strategies` should be 2 items long (P1's strategy, then P2's strategy)"
+assert len(STRATEGIES) == 2, "STRATEGIES should be 2 items long (P1's strategy, then P2's strategy)"
 
 
 def main():
     n = 500
 
-    strategies[:0] = [None]
+    STRATEGIES[:0] = [None]
     print(f'Playing {n} games of Connect Four with these strategies:')
-    print('P1:', strategies[1].__name__)
-    print('P2:', strategies[2].__name__)
+    print('P1:', STRATEGIES[1].__name__)
+    print('P2:', STRATEGIES[2].__name__)
 
     print()
     progress = ProgressBar(n)
@@ -47,7 +47,7 @@ def main():
     for i in range(n):
         gamestate = get_initial_state()
         while not is_game_over(gamestate):
-            move = strategies[gamestate.turn](gamestate)
+            move = STRATEGIES[gamestate.turn](gamestate)
             gamestate = make_move(gamestate, move)
         result = is_game_over(gamestate)
         counts[result] += 1
