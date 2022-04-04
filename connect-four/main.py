@@ -19,11 +19,17 @@ from util import chunks
 strategies = [
     choose_random_move,
     choose_random_move,
+
+    # choose_leftmost_move,
+    # simple1,
+    # simple2,
+    # simple3,
 ]
+
+assert len(strategies) == 2, "`strategies` should be 2 items long (P1's strategy, then P2's strategy)"
 
 
 def main():
-    random.seed(1)
     n = 500
 
     strategies[:0] = [None]
