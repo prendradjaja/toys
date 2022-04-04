@@ -8,6 +8,7 @@ from strategies import (
     choose_leftmost_move,
     simple1,
     simple2,
+    simple3,
 )
 
 from util import chunks
@@ -72,7 +73,6 @@ def show_multiple(gamestates):
         ascii_arts = [to_ascii(gamestate).split('\n') for gamestate in chunk]
         for i in range(len(ascii_arts[0])):
             print(separator.join(art[i] for art in ascii_arts))
-        # print()
 
 
 if __name__ == '__main__':
