@@ -104,20 +104,29 @@ def get_moves(gamestate):
 # TODO This isn't really a "rules" function -- move to a separate file? Rename
 # this file?
 def show(gamestate):
+    print(to_ascii(gamestate), end='')
+
+
+def to_ascii(gamestate):
     board = gamestate.board
     def chipstr(chip):
         if chip == 0:
             return '.'
         elif chip == 1:
+            # return '1'
             return colored('1', color='red')
         elif chip == 2:
+            # return '2'
             return colored('2', color='yellow')
         else:
             1/0
 
+    result = ''
     for row in reversed(transpose(board)):
-        print(' '.join(chipstr(x) for x in row))
-    print()
+        result += ' '.join(chipstr(x) for x in row) + '\n'
+    result += '\n'
+
+    return result
 
 
 # TODO This isn't really a "rules" function -- move to a separate file? Rename

@@ -3,6 +3,7 @@ import inspect
 import types
 import itertools
 from collections import Counter
+import functools
 
 def tee_disableable(*args, **kwargs):
     print(*args, **kwargs) ############### can disable me by commenting out this line
@@ -262,9 +263,26 @@ def flatten(t):
     return [item for sublist in t for item in sublist]
 
 def listify(fn):
+    @functools.wraps(fn)
     def wrapped(*args, **kwargs):
         return list(fn(*args, **kwargs))
     return wrapped
+
+# TODO add to aoc repo
+@listify
+def chunks(lst, chunksize):
+    '''
+    >>> chunks(['a', 'b', 'c', 'd', 'e', 'f'], 3)
+    [['a', 'b', 'c'], ['d', 'e', 'f']]
+
+    If len(lst) is not a multiple of chunksize, the last chunk will be shorter:
+    >>> chunks(['a', 'b', 'c', 'd', 'e'], 3)
+    [['a', 'b', 'c'], ['d', 'e']]
+    >>> chunks(['a', 'b', 'c', 'd'], 3)
+    [['a', 'b', 'c'], ['d']]
+    '''
+    for i in range(0, len(lst), chunksize):
+        yield lst[i : i+chunksize]
 
 
 # enumerate

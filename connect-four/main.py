@@ -5,6 +5,7 @@ import random
 from constants import DIRECTIONS
 from rules import *
 from gridlib import gridplane as gridlib
+from util import chunks
 
 
 def main():
@@ -34,8 +35,7 @@ def main():
         final_positions.append(gamestate)
 
     print('\nFinal positions of some sample games:')
-    for each in final_positions[:3]:
-        show(each)
+    show_multiple(final_positions[:10])
 
     print('Results:')
     result_names = {
@@ -46,6 +46,19 @@ def main():
     for result, name in result_names.items():
         percent = counts[result] / n
         print(f'{name}\t{percent:>6.1%}')  # https://docs.python.org/3/library/string.html#format-specification-mini-language
+
+
+def show_multiple(gamestates):
+    MAX_BOARDS_PER_ROW = 5
+    HORIZONTAL_SPACING = 4
+
+    separator = ' ' * HORIZONTAL_SPACING
+
+    for chunk in chunks(gamestates, MAX_BOARDS_PER_ROW):
+        ascii_arts = [to_ascii(gamestate).split('\n') for gamestate in chunk]
+        for i in range(len(ascii_arts[0])):
+            print(separator.join(art[i] for art in ascii_arts))
+        # print()
 
 
 def choose_random_move(gamestate):
