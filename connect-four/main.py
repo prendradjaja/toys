@@ -35,7 +35,7 @@ assert len(STRATEGIES) == 2, "STRATEGIES should be 2 items long (P1's strategy, 
 
 
 def main():
-    n = 500
+    n = 100
 
     STRATEGIES[:0] = [None]
     print(f'Playing {n} games of Connect Four with these strategies:')
