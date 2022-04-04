@@ -65,7 +65,7 @@ def choose_random_move(gamestate):
     return random.choice(get_moves(gamestate))
 
 
-def choose_minimum_move(gamestate):
+def choose_leftmost_move(gamestate):
     return min(get_moves(gamestate))
 
 
