@@ -1,0 +1,31 @@
+<style>
+  .header {
+    background: lightgrey;
+    position: sticky;
+    top: 0;
+  }
+</style>
+
+<body>
+  <script src="./words.js"></script>
+
+  Worth noticing: How do you deal with multiple headers? Easy, do nothing: They just stack on top of each other!
+
+
+  <script>
+    let html = '';
+    let prev = 'zzz';
+    for (let word of words) {
+      if (prev[0] !== word[0]) {
+        html += `
+          <div class="header">${word[0].toUpperCase()}</div>
+        `;
+      }
+      html += `
+        <div>${word}</div>
+      `;
+      prev = word;
+    }
+    document.body.innerHTML += html;
+  </script>
+</body>
