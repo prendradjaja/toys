@@ -26,6 +26,8 @@ From Wikipedia:
       contribute a factor of 2)
 '''
 
+import itertools
+
 from sudoku_utils import parse, is_valid, serialize, ALL_DIGITS_STRING, show
 
 
@@ -33,11 +35,11 @@ def main():
     # An arbitrary example sudoku
     digits = '124567893378294516659831742987123465231456978546789321863972154495618237712345689'
     show(parse(digits))
-    show(parse(transform(digits, relabeling='987654321')))
+    show(parse(transform(digits, relabel='987654321')))
 
 
 # TODO Use permutation index instead of permutation. Requires find_nth_permutation
-def relabel(digits, permutation):
+def _relabel(digits, permutation):
     '''
     permutation: a digitstring e.g. '987654321'
     '''
@@ -46,16 +48,32 @@ def relabel(digits, permutation):
     )
 
 
+def permute_bands(digits, permutation_index):
+    pass
+
+
 # TODO Add support for the rest of the transformations
 # TODO Allow use of "transformation index" that combines all these args into
 # one integer?
 def transform(
     digits,  # Should we take a grid or a digitstring?
     *,
-    relabeling=ALL_DIGITS_STRING,  # i.e. default is "don't relabel"
+    relabel=ALL_DIGITS_STRING,  # i.e. default is "don't relabel"
 ):
-    digits = relabel(digits, relabeling)
+    digits = _relabel(digits, relabel)
     return digits  # Should we return a grid or a digitstring?
+
+
+def nth_permutation(seq, n):
+    '''
+    n: zero-indexed
+    '''
+    # There are more performant ways to implement this, but this is perfectly
+    # sufficient for this use case.
+
+    # Maybe do a small optimization anyway -- this can be done in "constant
+    # space"
+    return list(itertools.permutations(seq))[n]
 
 
 if __name__ == '__main__':
