@@ -34,9 +34,9 @@ from sudoku_utils import parse, is_valid, serialize, ALL_DIGITS_STRING, show
 # TODO
 # x Relabeling symbols (9!)
 # x Band permutations (3!)
-# . Row permutations within a band (3!×3!×3!)
+# x Row permutations within a band (3!×3!×3!)
 # x Stack permutations (3!)
-# . Column permutations within a stack (3!×3!×3!)
+# x Column permutations within a stack (3!×3!×3!)
 # . Reflection, transposition and rotation (2)
 
 
@@ -48,7 +48,7 @@ def main():
     digits = '124567893378294516659831742987123465231456978546789321863972154495618237712345689'
 
     show(parse(digits))
-    show(parse(transform(digits, permute_stacks=1)))
+    show(parse(transform(digits, permute_within_stacks=(1, 0, 1))))
 
 
 # TODO Use permutation index instead of permutation. Requires find_nth_permutation
@@ -75,12 +75,29 @@ def _permute_bands(digits, permutation_index):
             for c in range(9):
                 grid2[target_row][c] = grid1[source_row][c]
 
-    assert 0 <= permutation_index < 6
+    assert 0 <= permutation_index < 6  # TODO Move this assertion to nth_permutation
     perm = nth_permutation([0, 1, 2], permutation_index)
     original = parse(digits)
     result = parse(zeros_string)
     for source_band, target_band in zip(range(3), perm):
         copy_band(original, result, source_band, target_band)
+    return serialize(result)
+
+
+def _permute_within_bands(digits, permutation_indices):
+    def copy_row(grid1, grid2, source_row, target_row):
+        for c in range(9):
+            grid2[target_row][c] = grid1[source_row][c]
+
+    original = parse(digits)
+    result = parse(zeros_string)
+
+    for band_start, permutation_index in zip([0, 3, 6], permutation_indices):
+        source_rows = range(band_start, band_start + 3)
+        target_rows = nth_permutation(source_rows, permutation_index)
+        for s_row, t_row in zip(source_rows, target_rows):
+            copy_row(original, result, s_row, t_row)
+
     return serialize(result)
 
 
@@ -94,6 +111,16 @@ def _permute_stacks(digits, permutation_index):
     return serialize(grid)
 
 
+def _permute_within_stacks(digits, permutation_indices):
+    grid = parse(digits)
+    grid = transpose(grid)
+    grid = parse(
+        _permute_within_bands(serialize(grid), permutation_indices)
+    )
+    grid = transpose(grid)
+    return serialize(grid)
+
+
 # TODO Add support for the rest of the transformations
 # TODO Allow use of "transformation index" that combines all these args into
 # one integer?
@@ -102,14 +129,20 @@ def transform(
     *,
     relabel=ALL_DIGITS_STRING,
     permute_bands=0,
+    permute_within_bands=(0, 0, 0),
     permute_stacks=0,
+    permute_within_stacks=(0, 0, 0),
 ):
     '''
     All optional arguments default to "skip this step".
     '''
     digits = _relabel(digits, relabel)
+
     digits = _permute_bands(digits, permute_bands)
+    digits = _permute_within_bands(digits, permute_within_bands)
+
     digits = _permute_stacks(digits, permute_stacks)
+    digits = _permute_within_stacks(digits, permute_within_stacks)
     return digits  # Should we return a grid or a digitstring?
 
 
