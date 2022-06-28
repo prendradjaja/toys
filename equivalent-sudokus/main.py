@@ -37,7 +37,7 @@ from sudoku_utils import parse, is_valid, serialize, ALL_DIGITS_STRING, show
 # x Row permutations within a band (3!×3!×3!)
 # x Stack permutations (3!)
 # x Column permutations within a stack (3!×3!×3!)
-# . Reflection, transposition and rotation (2)
+# x Reflection, transposition and rotation (2)
 
 
 zeros_string = '000000000000000000000000000000000000000000000000000000000000000000000000000000000'
@@ -48,7 +48,7 @@ def main():
     digits = '124567893378294516659831742987123465231456978546789321863972154495618237712345689'
 
     show(parse(digits))
-    show(parse(transform(digits, permute_within_stacks=(1, 0, 1))))
+    show(parse(transform(digits, transpose=True)))
 
 
 # TODO Use permutation index instead of permutation. Requires find_nth_permutation
@@ -103,21 +103,27 @@ def _permute_within_bands(digits, permutation_indices):
 
 def _permute_stacks(digits, permutation_index):
     grid = parse(digits)
-    grid = transpose(grid)
+    grid = transpose_grid(grid)
     grid = parse(
         _permute_bands(serialize(grid), permutation_index)
     )
-    grid = transpose(grid)
+    grid = transpose_grid(grid)
     return serialize(grid)
 
 
 def _permute_within_stacks(digits, permutation_indices):
     grid = parse(digits)
-    grid = transpose(grid)
+    grid = transpose_grid(grid)
     grid = parse(
         _permute_within_bands(serialize(grid), permutation_indices)
     )
-    grid = transpose(grid)
+    grid = transpose_grid(grid)
+    return serialize(grid)
+
+
+def _transpose(digits):
+    grid = parse(digits)
+    grid = transpose_grid(grid)
     return serialize(grid)
 
 
@@ -132,6 +138,7 @@ def transform(
     permute_within_bands=(0, 0, 0),
     permute_stacks=0,
     permute_within_stacks=(0, 0, 0),
+    transpose=False,
 ):
     '''
     All optional arguments default to "skip this step".
@@ -143,6 +150,10 @@ def transform(
 
     digits = _permute_stacks(digits, permute_stacks)
     digits = _permute_within_stacks(digits, permute_within_stacks)
+
+    if transpose:
+        digits = _transpose(digits)
+
     return digits  # Should we return a grid or a digitstring?
 
 
@@ -158,9 +169,9 @@ def nth_permutation(seq, n):
     return list(itertools.permutations(seq))[n]
 
 
-def transpose(m):
+def transpose_grid(m):
     """
-    >>> transpose([[1, 2, 3], [4, 5, 6]])
+    >>> transpose_grid([[1, 2, 3], [4, 5, 6]])
     [[1, 4], [2, 5], [3, 6]]
     """
     return [list(i) for i in zip(*m)]
