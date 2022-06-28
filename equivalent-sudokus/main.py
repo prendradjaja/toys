@@ -31,11 +31,15 @@ import itertools
 from sudoku_utils import parse, is_valid, serialize, ALL_DIGITS_STRING, show
 
 
+zeros_string = '000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+
+
 def main():
     # An arbitrary example sudoku
     digits = '124567893378294516659831742987123465231456978546789321863972154495618237712345689'
+
     show(parse(digits))
-    show(parse(transform(digits, relabel='987654321')))
+    show(parse(transform(digits, relabel='123456798', permute_bands=1)))
 
 
 # TODO Use permutation index instead of permutation. Requires find_nth_permutation
@@ -48,8 +52,27 @@ def _relabel(digits, permutation):
     )
 
 
-def permute_bands(digits, permutation_index):
-    pass
+def _permute_bands(digits, permutation_index):
+    def copy_band(grid1, grid2, b1, b2):
+        '''
+        Copy band indexed by B1 from GRID1 into GRID2 (at index B2).
+
+        Indices are 0 to 2 (inclusive).
+        '''
+        for source_row, target_row in zip(
+            [b1 * 3 + i for i in range(3)],
+            [b2 * 3 + i for i in range(3)]
+        ):
+            for c in range(9):
+                grid2[target_row][c] = grid1[source_row][c]
+
+    assert 0 <= permutation_index < 6
+    perm = nth_permutation([0, 1, 2], permutation_index)
+    original = parse(digits)
+    result = parse(zeros_string)
+    for source_band, target_band in zip(range(3), perm):
+        copy_band(original, result, source_band, target_band)
+    return serialize(result)
 
 
 # TODO Add support for the rest of the transformations
@@ -58,9 +81,14 @@ def permute_bands(digits, permutation_index):
 def transform(
     digits,  # Should we take a grid or a digitstring?
     *,
-    relabel=ALL_DIGITS_STRING,  # i.e. default is "don't relabel"
+    relabel=ALL_DIGITS_STRING,
+    permute_bands=0,
 ):
+    '''
+    All optional arguments default to "skip this step".
+    '''
     digits = _relabel(digits, relabel)
+    digits = _permute_bands(digits, permute_bands)
     return digits  # Should we return a grid or a digitstring?
 
 
