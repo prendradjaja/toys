@@ -31,6 +31,15 @@ import itertools
 from sudoku_utils import parse, is_valid, serialize, ALL_DIGITS_STRING, show
 
 
+# TODO
+# x Relabeling symbols (9!)
+# x Band permutations (3!)
+# . Row permutations within a band (3!×3!×3!)
+# x Stack permutations (3!)
+# . Column permutations within a stack (3!×3!×3!)
+# . Reflection, transposition and rotation (2)
+
+
 zeros_string = '000000000000000000000000000000000000000000000000000000000000000000000000000000000'
 
 
@@ -39,7 +48,7 @@ def main():
     digits = '124567893378294516659831742987123465231456978546789321863972154495618237712345689'
 
     show(parse(digits))
-    show(parse(transform(digits, relabel='123456798', permute_bands=1)))
+    show(parse(transform(digits, permute_stacks=1)))
 
 
 # TODO Use permutation index instead of permutation. Requires find_nth_permutation
@@ -75,6 +84,16 @@ def _permute_bands(digits, permutation_index):
     return serialize(result)
 
 
+def _permute_stacks(digits, permutation_index):
+    grid = parse(digits)
+    grid = transpose(grid)
+    grid = parse(
+        _permute_bands(serialize(grid), permutation_index)
+    )
+    grid = transpose(grid)
+    return serialize(grid)
+
+
 # TODO Add support for the rest of the transformations
 # TODO Allow use of "transformation index" that combines all these args into
 # one integer?
@@ -83,12 +102,14 @@ def transform(
     *,
     relabel=ALL_DIGITS_STRING,
     permute_bands=0,
+    permute_stacks=0,
 ):
     '''
     All optional arguments default to "skip this step".
     '''
     digits = _relabel(digits, relabel)
     digits = _permute_bands(digits, permute_bands)
+    digits = _permute_stacks(digits, permute_stacks)
     return digits  # Should we return a grid or a digitstring?
 
 
@@ -102,6 +123,14 @@ def nth_permutation(seq, n):
     # Maybe do a small optimization anyway -- this can be done in "constant
     # space"
     return list(itertools.permutations(seq))[n]
+
+
+def transpose(m):
+    """
+    >>> transpose([[1, 2, 3], [4, 5, 6]])
+    [[1, 4], [2, 5], [3, 6]]
+    """
+    return [list(i) for i in zip(*m)]
 
 
 if __name__ == '__main__':
