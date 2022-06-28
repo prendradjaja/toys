@@ -27,6 +27,9 @@ From Wikipedia:
 '''
 
 import itertools
+from math import factorial
+from random import randrange
+import random
 
 from sudoku_utils import parse, is_valid, serialize, ALL_DIGITS_STRING, show
 
@@ -48,7 +51,8 @@ def main():
     digits = '124567893378294516659831742987123465231456978546789321863972154495618237712345689'
 
     show(parse(digits))
-    show(parse(transform(digits, transpose=True)))
+    show(parse(transform(digits)))
+    show(parse(transform_random(digits)))
 
 
 # TODO Use permutation index instead of permutation. Requires find_nth_permutation
@@ -143,6 +147,14 @@ def transform(
     '''
     All optional arguments default to "skip this step".
     '''
+
+    # print(f'{relabel=}')
+    # print(f'{permute_bands=}')
+    # print(f'{permute_within_bands=}')
+    # print(f'{permute_stacks=}')
+    # print(f'{permute_within_stacks=}')
+    # print(f'{transpose=}')
+
     digits = _relabel(digits, relabel)
 
     digits = _permute_bands(digits, permute_bands)
@@ -155,6 +167,26 @@ def transform(
         digits = _transpose(digits)
 
     return digits  # Should we return a grid or a digitstring?
+
+
+def transform_random(digits):
+    return transform(
+        digits,
+        relabel = ''.join(nth_permutation(ALL_DIGITS_STRING, randrange(factorial(9)))),
+        permute_bands=randrange(factorial(3)),
+        permute_within_bands=(
+            randrange(factorial(3)),
+            randrange(factorial(3)),
+            randrange(factorial(3)),
+        ),
+        permute_stacks=randrange(factorial(3)),
+        permute_within_stacks=(
+            randrange(factorial(3)),
+            randrange(factorial(3)),
+            randrange(factorial(3)),
+        ),
+        transpose=random.choice([True, False]),
+    )
 
 
 def nth_permutation(seq, n):
