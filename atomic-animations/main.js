@@ -1,10 +1,9 @@
 import { Tween, Easing, update } from './tween.esm.js';
 
-
 const $ = s => document.querySelector(s);
 
 let position = { x: 100, y: 100 };
-let activeTween;
+let lastTween;
 
 function main() {
   updatePosition(position);
@@ -16,8 +15,14 @@ function main() {
   requestAnimationFrame(animate);
 
   document.addEventListener('keydown', (e) => {
-    if (activeTween) {
-      activeTween.stop();
+    if (lastTween) {
+      // If the most recent tween is still in progress, we want to skip to the
+      // end.
+
+      // (Actually, this only should happen if the key pressed is one of
+      // the keys handled below. As is, pressing any other key will also skip
+      // to the end. TODO Don't skip to the end for other keys)
+      lastTween.stop();
       updatePosition(position);
     }
 
@@ -35,7 +40,7 @@ function main() {
       return;
     }
 
-    activeTween = new Tween({...oldPosition})
+    lastTween = new Tween({...oldPosition})
       .to(position, 250)
       .easing(Easing.Quadratic.Out)
       .onUpdate((livePosition) => {
