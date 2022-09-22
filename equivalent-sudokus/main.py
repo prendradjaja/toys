@@ -3,7 +3,7 @@ A fully-filled sudoku grid can be transformed into a variety of essentially
 equivalent grids.
 
 From Wikipedia:
-<https://en.wikipedia.org/wiki/Mathematics_of_Sudoku#Validity_preserving_transformations>
+<https://en.wikipedia.org/w/index.php?title=Mathematics_of_Sudoku&oldid=1095869435>
 
     Two valid grids are essentially the same if one can be derived from the other, using a so-called validity preserving transformation (VPT). These transformations always transform a valid grid into another valid grid. There are two major types: symbol permutations (relabeling) and cell permutations (rearrangements). They are:
 
@@ -34,15 +34,6 @@ import random
 from sudoku_utils import parse, is_valid, serialize, ALL_DIGITS_STRING, show
 
 
-# TODO
-# x Relabeling symbols (9!)
-# x Band permutations (3!)
-# x Row permutations within a band (3!×3!×3!)
-# x Stack permutations (3!)
-# x Column permutations within a stack (3!×3!×3!)
-# x Reflection, transposition and rotation (2)
-
-
 zeros_string = '000000000000000000000000000000000000000000000000000000000000000000000000000000000'
 
 
@@ -55,7 +46,7 @@ def main():
     show(parse(transform_random(digits)))
 
 
-# TODO Use permutation index instead of permutation. Requires find_nth_permutation
+# TODO Maybe use permutation index instead of permutation
 def _relabel(digits, permutation):
     '''
     permutation: a digitstring e.g. '987654321'
@@ -131,9 +122,6 @@ def _transpose(digits):
     return serialize(grid)
 
 
-# TODO Add support for the rest of the transformations
-# TODO Allow use of "transformation index" that combines all these args into
-# one integer?
 def transform(
     digits,  # Should we take a grid or a digitstring?
     *,
@@ -147,13 +135,6 @@ def transform(
     '''
     All optional arguments default to "skip this step".
     '''
-
-    # print(f'{relabel=}')
-    # print(f'{permute_bands=}')
-    # print(f'{permute_within_bands=}')
-    # print(f'{permute_stacks=}')
-    # print(f'{permute_within_stacks=}')
-    # print(f'{transpose=}')
 
     digits = _relabel(digits, relabel)
 
