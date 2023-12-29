@@ -1,0 +1,35 @@
+This class allows convenient arithmetic for vectors. I mainly intend to use
+this for Advent of Code. (Authored 2023 after AoC 2023. Try this out next
+year!)
+
+For example, instead of writing this ...
+
+    def get_position(initial_position, velocity, time):
+        return addvec(
+            initial_position,
+            mulvec(velocity, time)
+        )
+
+... we can write this:
+
+    def get_position(initial_position, velocity, time):
+        return initial_position + velocity * time
+
+For more details, see tests.txt (which doubles as documentation)
+
+Alternatives:
+- Use NumPy
+    - Advantages of vector.py: No virtualenv. No startup time.
+    - Disadvantages of vector.py: Copy & paste.
+- Use addvec mulvec etc
+
+Not implemented:
+- division, because there's more possibilities: float division, floor
+  division, modulo... (implement later if needed)
+
+This directory also contains:
+- tests.txt (which doubles as documentation)
+- A few example programs from Advent of Code 2023 (which double as additional
+  tests)
+
+Tests can be run via run-tests.sh.

@@ -1,0 +1,52 @@
+>>> from vector import Vector
+
+A vector can be indexed, unpacked, iterated over
+>>> v = Vector([12, 34])
+>>> v[0]
+12
+>>> r, c = v
+>>> (r, c)
+(12, 34)
+>>> [x * 10 for x in v]
+[120, 340]
+
+It has a meaningful repr()
+>>> v
+Vector([12, 34])
+
+Vectors support arithmetic.
+The supported operations are:
+- addition and subtraction (with other vectors, elementwise)
+- multiplication (with scalars)
+>>> v + Vector([1000, 2000])
+Vector([1012, 2034])
+>>> v - Vector([10, 30])
+Vector([2, 4])
+>>> v * 10
+Vector([120, 340])
+>>> 10 * v
+Vector([120, 340])
+
+Arithmetic: Non-vectors are coerced into vectors
+>>> v + (1000, 2000)
+Vector([1012, 2034])
+>>> [1000, 2000] + v
+Vector([1012, 2034])
+
+Arithmetic: Augmented arithmetic assignments are supported, immutable-style
+>>> some_var = Vector([1, 2])
+>>> other_var = some_var
+>>> some_var += (10, 20)
+>>> some_var
+Vector([11, 22])
+>>> other_var
+Vector([1, 2])
+
+Vectors are hashable
+>>> s = set()
+>>> s.add(Vector([12, 34]))
+>>> len(s)
+1
+>>> s.add(Vector([12, 34]))
+>>> len(s)
+1
