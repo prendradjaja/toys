@@ -79,18 +79,5 @@ def area(polygon):
     return abs(total / 2)
 
 
-def addvec(v, w):
-    return tuple(a + b for a, b in zip(v, w))
-
-
-def subvec(v, w):
-    return tuple(a - b for a, b in zip(v, w))
-
-
-def mulvec(v, s):
-    '''Multiply a vector by a scalar'''
-    return tuple(a * s for a in v)
-
-
 if __name__ == '__main__':
     main()

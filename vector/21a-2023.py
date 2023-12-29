@@ -65,9 +65,5 @@ def enumerate2d(grid):
             yield (r, c), value
 
 
-def addvec(v, w):
-    return tuple(a + b for a, b in zip(v, w))
-
-
 if __name__ == '__main__':
     main()

@@ -1,6 +1,7 @@
-This class allows convenient arithmetic for vectors. I mainly intend to use
-this for Advent of Code. (Authored 2023 after AoC 2023. Try this out next
-year!)
+This class allows convenient arithmetic for vectors.
+
+(I mainly intend to use this for Advent of Code: casual-mode, not
+leaderboard-mode. Authored 2023 after AoC 2023. Try this out next year!)
 
 For example, instead of writing this ...
 
@@ -29,7 +30,16 @@ Not implemented:
 
 This directory also contains:
 - tests.txt (which doubles as documentation)
-- A few example programs from Advent of Code 2023 (which double as additional
-  tests)
+- A few example programs from my Advent of Code 2023 solutions (which double
+  as additional tests)
+    - 16a-2023.py: Uses addition and hashing
+    - 18b-2023.py: Uses addition and multiplication
+    - 21a-2023.py: Uses addition and coercion
+- run-tests.sh: Run all of the above tests
 
-Tests can be run via run-tests.sh.
+I'm not sure if I want this library to support coercion (e.g. adding a Vector
+and a tuple). It's convenient but can make it easier to introduce bugs if you
+e.g. miss a spot where you add two tuples instead of adding a tuple to a
+Vector. For now, coercion is supported (for convenience and for similarity to
+NumPy), but maybe I'll have a stronger opinion one way or the other after
+using it some (i.e. probably after another year or two of AoC).
