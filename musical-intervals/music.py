@@ -1,11 +1,12 @@
 from dataclasses import dataclass
+import dataclasses
 from types import SimpleNamespace
 
 
 _CDEFGAB = 'CDEFGAB'
 
 
-@dataclass
+@dataclass(frozen=True)
 class Pitch:
     '''
     Construct a pitch:
@@ -61,9 +62,10 @@ class Pitch:
 
         result = Pitch(letter, 0, self.octave)
         if result.midi_number() < self.midi_number():
-            result.octave += 1
+            result = dataclasses.replace(result, octave=result.octave + 1)
 
-        result.modifier = interval.half_steps() - result.midi_number() + self.midi_number()
+        modifier = interval.half_steps() - result.midi_number() + self.midi_number()
+        result = dataclasses.replace(result, modifier=modifier)
         return result
 
     # def __sub__(self, other):
@@ -82,7 +84,7 @@ _LEGAL_INTERVALS = [
     for quality in 'dmMA'
 ]
 
-@dataclass
+@dataclass(frozen=True)
 class Interval:
     '''
     Construct an interval:
