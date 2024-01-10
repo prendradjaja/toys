@@ -31,3 +31,9 @@ class Vector:
 
     def __hash__(self):
         return hash(self.elements)
+
+    @classmethod
+    def enumerate2d(cls, grid):
+        for r, row in enumerate(grid):
+            for c, value in enumerate(row):
+                yield cls([r, c]), value
