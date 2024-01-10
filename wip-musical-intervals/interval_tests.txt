@@ -1,0 +1,37 @@
+>>> from music import Interval, INTERVALS as I
+
+Interval.str()
+>>> str(Interval('M', 3))
+'M3'
+
+Fetching from INTERVALS
+>>> repr(I.M2)
+"Interval(quality='M', number=2)"
+
+Interval.__eq__()
+>>> I.P4 == Interval('P', 4)  # Same interval is equal
+True
+>>> I.P4 == I.P5  # Different interval is not
+False
+>>> I.M3 == I.d4  # Does not consider enharmonics the same
+False
+
+Interval.half_steps()
+>>> I.m3.half_steps()
+3
+>>> I.M3.half_steps()
+4
+>>> I.m7.half_steps()
+10
+>>> I.P4.half_steps()
+5
+>>> I.A4.half_steps()
+6
+>>> I.d4.half_steps()
+4
+>>> I.M6.half_steps()
+9
+>>> I.d6.half_steps()
+7
+>>> I.A6.half_steps()
+10

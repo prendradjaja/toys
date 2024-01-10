@@ -1,0 +1,31 @@
+>>> from music import Pitch, PITCHES as P
+
+Pitch.str()
+>>> str(Pitch('C', 0, 4))
+'C4'
+>>> str(Pitch('C', 1, 4))
+'Cs4'
+
+Fetching from PITCHES
+>>> repr(P.C4)
+"Pitch(letter='C', modifier=0, octave=4)"
+>>> repr(P.Cs4)
+"Pitch(letter='C', modifier=1, octave=4)"
+>>> repr(P.Cf4)
+"Pitch(letter='C', modifier=-1, octave=4)"
+
+Pitch.__eq__()
+>>> P.Cs4 == Pitch('C', 1, 4)  # Same note is equal
+True
+>>> P.C4 == P.D4  # Different note is not
+False
+>>> P.Cs4 == P.Df4  # Does not consider enharmonics the same
+False
+
+Pitch.midi_number()
+>>> P.C4.midi_number()
+60
+>>> P.A4.midi_number()
+69
+>>> P.B4.midi_number()
+71
