@@ -35,3 +35,11 @@ Interval.half_steps()
 7
 >>> I.A6.half_steps()
 10
+
+Interval.invert()
+>>> print(I.M3.invert())
+m6
+>>> print(I.P4.invert())
+P5
+>>> all(interval.half_steps() + interval.invert().half_steps() == 12 for interval in I.__dict__.values())
+True

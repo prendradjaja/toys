@@ -76,7 +76,7 @@ class Pitch:
 
 _LEGAL_INTERVALS = [
     (quality, number)
-    for number in [1, 4, 5]
+    for number in [1, 4, 5, 8]
     for quality in 'dPA'
 ] + [
     (quality, number)
@@ -97,17 +97,17 @@ class Interval:
     Interval(quality='M', number=3)
     '''
     quality: ...
-    number: ...  # 1 | 2 | 3 | 4 | 5 | 6 | 7, but not 8 (just use 1)
+    number: ...  # 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
 
     def __post_init__(self):
         if (self.quality, self.number) not in _LEGAL_INTERVALS:
-            raise ValueError('Invalid interval')
+            raise ValueError(f'Invalid interval: quality={self.quality}, number={self.number}')
 
     def __str__(self):
         return f'{self.quality}{self.number}'
 
     def half_steps(self):
-        if self.number in [1, 4, 5]:
+        if self.number in [1, 4, 5, 8]:
             modifier = {
                 'd': -1,
                 'P': 0,
@@ -130,9 +130,21 @@ class Interval:
             5: 7,
             6: 9,
             7: 11,
+            8: 12,
         }[self.number]
 
-    # todo: Support invert()?
+    def invert(self):
+        quality = {
+            'P': 'P',
+            'M': 'm',
+            'm': 'M',
+            'd': 'A',
+            'A': 'd',
+        }[self.quality]
+        return Interval(
+            quality,
+            9 - self.number
+        )
 
 
 _pitches = [
