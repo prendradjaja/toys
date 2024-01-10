@@ -31,9 +31,9 @@ Pitch.midi_number()
 69
 >>> P.B4.midi_number()
 71
->>> P.Cf4.midi_number()
+>>> P.Cf4.midi_number()  # n.b. This is 59, not 71. https://www.reddit.com/r/musictheory/comments/67uqni/is_cflat_4_the_note_one_semitone_below_middle_c/
 59
->>> P.Bs4.midi_number()
+>>> P.Bs4.midi_number()  # Same edge case as Cf4, but in reverse
 72
 
 Pitch.__add__()

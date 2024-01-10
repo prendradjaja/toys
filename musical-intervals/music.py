@@ -28,14 +28,6 @@ class Pitch:
         60
         >>> P.A4.midi_number()
         69
-
-        Edge case: I'm not sure if there's a consensus for how e.g. Cflat4
-        should be treated. Should it be midi number 59 (one below C4)? Or
-        should it be considered enharmonically equivalent to B4, and therefore
-        be one octave higher (71)? For simplicity of implementation, this
-        library does the former.
-        >>> P.Cf4.midi_number()
-        59
         '''
         return (
             [12, 14, 16, 17, 19, 21, 23][_CDEFGAB.index(self.letter)]
