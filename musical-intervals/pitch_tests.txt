@@ -1,10 +1,12 @@
->>> from music import Pitch, PITCHES as P
+>>> from music import Pitch, PITCHES as P, INTERVALS as I
 
 Pitch.str()
 >>> str(Pitch('C', 0, 4))
 'C4'
 >>> str(Pitch('C', 1, 4))
 'Cs4'
+>>> str(Pitch('C', -1, 4))
+'Cf4'
 
 Fetching from PITCHES
 >>> repr(P.C4)
@@ -33,3 +35,15 @@ Pitch.midi_number()
 59
 >>> P.Bs4.midi_number()
 72
+
+Pitch.__add__()
+>>> print(P.C4 + I.M3)
+E4
+>>> print(P.A4 + I.M3)
+Cs5
+>>> print(P.Ef4 + I.M3)
+G4
+>>> print(P.Cs4 + I.M3)
+Es4
+>>> print(P.Bs4 + I.M3)
+Dss5

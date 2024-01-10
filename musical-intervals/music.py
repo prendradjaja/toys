@@ -44,17 +44,35 @@ class Pitch:
         )
 
     def __str__(self):
-        # todo: Support multiple flats, multiple sharps?
-        modifier = {
-            -1: 'f',
-            0: '',
-            1: 's',
-        }[self.modifier]
+        if self.modifier >= 0:
+            modifier = 's' * self.modifier
+        else:
+            modifier = 'f' * abs(self.modifier)
         return f'{self.letter}{modifier}{self.octave}'
 
-    # def __add__(self, other):
-    #     if not isinstance(other, Interval):
-    #         return NotImplemented
+    def __add__(self, other):
+        '''
+        >>> from music import PITCHES as P, INTERVALS as I
+        >>> print(P.C4 + I.M3)
+        E4
+        >>> print(P.Ef4 + I.M3)
+        G4
+        >>> print(P.Bs4 + I.M3)
+        Dss5
+        '''
+        if not isinstance(other, Interval):
+            return NotImplemented
+
+        interval = other
+        idx = _CDEFGAB.index(self.letter)
+        letter = _CDEFGAB[(idx + interval.number - 1) % len(_CDEFGAB)]
+
+        result = Pitch(letter, 0, self.octave)
+        if result.midi_number() < self.midi_number():
+            result.octave += 1
+
+        result.modifier = interval.half_steps() - result.midi_number() + self.midi_number()
+        return result
 
     # def __sub__(self, other):
     #     # todo: Support "pitch - pitch = interval"?
