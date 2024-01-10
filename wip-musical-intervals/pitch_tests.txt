@@ -29,3 +29,7 @@ Pitch.midi_number()
 69
 >>> P.B4.midi_number()
 71
+>>> P.Cf4.midi_number()
+59
+>>> P.Bs4.midi_number()
+72
