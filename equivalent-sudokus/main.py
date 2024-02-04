@@ -38,12 +38,18 @@ zeros_string = '0000000000000000000000000000000000000000000000000000000000000000
 
 
 def main():
-    # An arbitrary example sudoku
-    digits = '124567893378294516659831742987123465231456978546789321863972154495618237712345689'
+    example_unsolved = '003020600900305001001806400008102900700000008006708200002609500800203009005010300'
+    example_solved =   '483921657967345821251876493548132976729564138136798245372689514814253769695417382'
 
-    show(parse(digits))
-    show(parse(transform(digits)))
-    show(parse(transform_random(digits)))
+    # Can "scramble" a sudoku into an equivalent one
+    shuffled = transform_random(example_solved)
+    print(shuffled)
+    show(parse(shuffled))
+
+    # Works for solved or unsolved sudokus
+    shuffled = transform_random(example_unsolved)
+    print(shuffled)
+    show(parse(shuffled))
 
 
 # TODO Maybe use permutation index instead of permutation
