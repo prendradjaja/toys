@@ -17,38 +17,25 @@ def main():
 
 
 def solve(puzzle):
+    '''
+    Given a sudoku puzzle as a 2D list of ints (use 0 for an empty square),
+    solve and return a 2D list of the solution.
+    '''
     puzzle = copy.deepcopy(puzzle)
     puzzle_with_extras = (puzzle, find_slots(puzzle))
-    backtracking_search(puzzle_with_extras)
+    recursive_backtracking([], puzzle_with_extras)
     return puzzle
 
 
-def backtracking_search(csp):
-    return recursive_backtracking([], csp)
-
-
 def recursive_backtracking(assignment, csp):
-    # Differences vs pseudocode are marked with (*)
-
     puzzle, slots = csp
     if len(assignment) == len(slots):
         return assignment
-
-    # (*) The next unassigned variable is always the next spot in the sudoku;
-    # there doesn't need to be a line of code for it right here (though it is
-    # handled by fill_slot())
 
     for n in range(1, 9 + 1):
         slot = slots[len(assignment)]
         r, c = slot
         if not is_invalid_digit(puzzle, r, c, n):
-            # Add var=value to assignment
-            # (*) Mutating puzzle. If we wanted to stick more closely to the
-            # pseudocode, we'd avoid mutating the puzzle and reconstruct it at
-            # each step i.e. `puzzle = fill_slots(initial_puzzle,
-            # assignment)`, where fill_slots() isn't a function that exists in
-            # this file, you'd have to implement that; and initial_puzzle is
-            # the puzzle with just the givens)
             fill_slot(puzzle, slots, len(assignment), n)
             assignment.append(n)
 
@@ -56,7 +43,6 @@ def recursive_backtracking(assignment, csp):
             if result != recursive_backtracking.FAILURE:
                 return result
 
-            # Remove var=value from assignment
             assignment.pop()
             fill_slot(puzzle, slots, len(assignment), 0)
 
