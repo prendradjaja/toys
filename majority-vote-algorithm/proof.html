@@ -17,10 +17,10 @@ const yAxisFontSize = "20px";
 
 // Declare the data points.
 const data = [
-    {x: 1, y: 1},
-    {x: 2, y: 2},
-    {x: 4, y: 3},
-    {x: 10, y: 1}
+    {x: 1, y: 1, color: "red"},
+    {x: 2, y: 2, color: "red"},
+    {x: 4, y: 3, color: "yellow"},
+    {x: 10, y: 1, color: "yellow"}
 ];
 
 // Declare the x (horizontal position) scale.
@@ -90,7 +90,7 @@ svg.selectAll("circle")
     .attr("cy", d => y(d.y))
     .attr("r", 5)
     .attr("stroke", "black")
-    .attr("fill", "lightblue");
+    .attr("fill", d => d.color);
 
 // Append the SVG element.
 container.append(svg.node());
