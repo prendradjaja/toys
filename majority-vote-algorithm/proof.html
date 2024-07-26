@@ -6,31 +6,51 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
 // Declare the chart dimensions and margins.
-const width = 640;
+const width = 500;
 const height = 300;
+
 const marginTop = 20;
 const marginRight = 20;
 const marginBottom = 30;
 const marginLeft = 40;
-const yTicksCountApprox = 4;
+
+const xMax = 17;
+const xMin = -1;
+const yMax = 4;
+const yMin = -0.5;
+
+const xTicksCountApprox = xMax;
+const yTicksCountApprox = yMax;
 const yAxisFontSize = "20px";
+
+const white = 'white';
+const blue = '#0081CD';
+const yellow = '#FEC200';
+const red = '#BC1E47';
 
 // Declare the data points.
 const data = [
-    {x: 1, y: 1, color: "red"},
-    {x: 2, y: 2, color: "red"},
-    {x: 4, y: 3, color: "yellow"},
-    {x: 10, y: 1, color: "yellow"}
+    {x: 0, y: 0, color: white, dotted: true},
+    {x: 1, y: 1, color: blue},
+    {x: 2, y: 2, color: blue},
+    {x: 3, y: 1, color: blue},
+    {x: 4, y: 2, color: blue},
+    {x: 5, y: 1, color: blue},
+    {x: 6, y: 0, color: blue},
+    {x: 7, y: 1, color: yellow},
+    {x: 8, y: 0, color: yellow},
+    {x: 9, y: 1, color: red},
+    {x: 10, y: 2, color: red},
 ];
 
 // Declare the x (horizontal position) scale.
 const x = d3.scaleLinear()
-    .domain([0, 10])
+    .domain([xMin, xMax])
     .range([marginLeft, width - marginRight]);
 
 // Declare the y (vertical position) scale.
 const y = d3.scaleLinear()
-    .domain([0, 3])
+    .domain([yMin, yMax])
     .range([height - marginBottom, marginTop]);
 
 // Create the SVG container.
@@ -50,6 +70,7 @@ const gridX = svg.append("g")
     .attr("class", "grid")
     .attr("transform", `translate(0,${height - marginBottom})`)
     .call(d3.axisBottom(x)
+        .ticks(xTicksCountApprox)
         .tickSize(-height + marginTop + marginBottom)
         .tickFormat("")
     );
@@ -67,7 +88,6 @@ const gridY = svg.append("g")
 svg.selectAll(".grid line")
     .attr("stroke", "lightgrey")
     .attr("stroke-opacity", 0.7)
-    .attr("shape-rendering", "crispEdges");
 
 // Define the line generator.
 const line = d3.line()
@@ -78,7 +98,7 @@ const line = d3.line()
 svg.append("path")
     .datum(data)
     .attr("fill", "none")
-    .attr("stroke", "steelblue")
+    .attr("stroke", "black")
     .attr("stroke-width", 2)
     .attr("d", line);
 
@@ -90,6 +110,7 @@ svg.selectAll("circle")
     .attr("cy", d => y(d.y))
     .attr("r", 5)
     .attr("stroke", "black")
+    .attr("stroke-dasharray", d => d.dotted ? "1.5" : "none")
     .attr("fill", d => d.color);
 
 // Append the SVG element.
