@@ -32,102 +32,102 @@ const red = '#BC1E47';
 
 // Data
 const algorithmStates = [
-    {x: 0, y: 0, color: white, dotted: true},
-    {x: 1, y: 1, color: blue},
-    {x: 2, y: 2, color: blue},
-    {x: 3, y: 1, color: blue},
-    {x: 4, y: 2, color: blue},
-    {x: 5, y: 1, color: blue},
-    {x: 6, y: 0, color: blue},
-    {x: 7, y: 1, color: yellow},
-    {x: 8, y: 0, color: yellow},
-    {x: 9, y: 1, color: red},
-    {x: 10, y: 2, color: red},
+  {x: 0, y: 0, color: white, dotted: true},
+  {x: 1, y: 1, color: blue},
+  {x: 2, y: 2, color: blue},
+  {x: 3, y: 1, color: blue},
+  {x: 4, y: 2, color: blue},
+  {x: 5, y: 1, color: blue},
+  {x: 6, y: 0, color: blue},
+  {x: 7, y: 1, color: yellow},
+  {x: 8, y: 0, color: yellow},
+  {x: 9, y: 1, color: red},
+  {x: 10, y: 2, color: red},
 ];
 const inputSymbols = [
-    {x: 1, color: blue},
-    {x: 2, color: blue},
-    {x: 3, color: red},
-    {x: 4, color: blue},
-    {x: 5, color: red},
-    {x: 6, color: yellow},
-    {x: 7, color: yellow},
-    {x: 8, color: red},
-    {x: 9, color: red},
-    {x: 10, color: red},
+  {x: 1, color: blue},
+  {x: 2, color: blue},
+  {x: 3, color: red},
+  {x: 4, color: blue},
+  {x: 5, color: red},
+  {x: 6, color: yellow},
+  {x: 7, color: yellow},
+  {x: 8, color: red},
+  {x: 9, color: red},
+  {x: 10, color: red},
 ];
 
 // Create SVG
 const svg = d3.create("svg")
-    .attr("width", width)
-    .attr("height", height);
+  .attr("width", width)
+  .attr("height", height);
 container.append(svg.node());
 
 // Axes
 const x = d3.scaleLinear()
-    .domain([xMin, xMax])
-    .range([marginLeft, width - marginRight]);
+  .domain([xMin, xMax])
+  .range([marginLeft, width - marginRight]);
 const y = d3.scaleLinear()
-    .domain([yMin, yMax])
-    .range([height - marginBottom, marginTop]);
+  .domain([yMin, yMax])
+  .range([height - marginBottom, marginTop]);
 svg.append("g")
-    .attr("transform", `translate(${marginLeft},0)`)
-    .call(d3.axisLeft(y).ticks(yTicksCountApprox).tickFormat(d3.format("d")))
-    .selectAll("text")
-    .style("font-size", yAxisFontSize);
+  .attr("transform", `translate(${marginLeft},0)`)
+  .call(d3.axisLeft(y).ticks(yTicksCountApprox).tickFormat(d3.format("d")))
+  .selectAll("text")
+  .style("font-size", yAxisFontSize);
 
 // Grid lines
 const gridX = svg.append("g")
-    .attr("class", "grid")
-    .attr("transform", `translate(0,${height - marginBottom})`)
-    .call(d3.axisBottom(x)
-        .ticks(xTicksCountApprox)
-        .tickSize(-height + marginTop + marginBottom)
-        .tickFormat("")
-    );
+  .attr("class", "grid")
+  .attr("transform", `translate(0,${height - marginBottom})`)
+  .call(d3.axisBottom(x)
+    .ticks(xTicksCountApprox)
+    .tickSize(-height + marginTop + marginBottom)
+    .tickFormat("")
+  );
 const gridY = svg.append("g")
-    .attr("class", "grid")
-    .attr("transform", `translate(${marginLeft},0)`)
-    .call(d3.axisLeft(y)
-        .ticks(4)
-        .tickSize(-width + marginLeft + marginRight)
-        .tickFormat("")
-    );
+  .attr("class", "grid")
+  .attr("transform", `translate(${marginLeft},0)`)
+  .call(d3.axisLeft(y)
+    .ticks(4)
+    .tickSize(-width + marginLeft + marginRight)
+    .tickFormat("")
+  );
 svg.selectAll(".grid line")
-    .attr("stroke", "lightgrey")
-    .attr("stroke-opacity", 0.7)
+  .attr("stroke", "lightgrey")
+  .attr("stroke-opacity", 0.7)
 
 // Draw the line between points in `algorithmStates`
 const line = d3.line()
-    .x(d => x(d.x))
-    .y(d => y(d.y));
+  .x(d => x(d.x))
+  .y(d => y(d.y));
 svg.append("path")
-    .datum(algorithmStates)
-    .attr("fill", "none")
-    .attr("stroke", "black")
-    .attr("stroke-width", 2)
-    .attr("d", line);
+  .datum(algorithmStates)
+  .attr("fill", "none")
+  .attr("stroke", "black")
+  .attr("stroke-width", 2)
+  .attr("d", line);
 
 // Draw the points in `algorithmStates`
 svg.selectAll("circle.algorithmStates")
-    .data(algorithmStates)
-    .enter().append("circle")
-    .attr("class", "algorithmStates")
-    .attr("cx", d => x(d.x))
-    .attr("cy", d => y(d.y))
-    .attr("r", 5)
-    .attr("stroke", "black")
-    .attr("stroke-dasharray", d => d.dotted ? "1.5" : "none")
-    .attr("fill", d => d.color);
+  .data(algorithmStates)
+  .enter().append("circle")
+  .attr("class", "algorithmStates")
+  .attr("cx", d => x(d.x))
+  .attr("cy", d => y(d.y))
+  .attr("r", 5)
+  .attr("stroke", "black")
+  .attr("stroke-dasharray", d => d.dotted ? "1.5" : "none")
+  .attr("fill", d => d.color);
 
 // Draw the points in `inputSymbols`
 svg.selectAll("circle.inputSymbols")
-    .data(inputSymbols)
-    .enter().append("circle")
-    .attr("class", "inputSymbols")
-    .attr("cx", d => x(d.x))
-    .attr("cy", d => y(inputSymbolY))
-    .attr("r", 5)
-    .attr("stroke", "black")
-    .attr("fill", d => d.color);
+  .data(inputSymbols)
+  .enter().append("circle")
+  .attr("class", "inputSymbols")
+  .attr("cx", d => x(d.x))
+  .attr("cy", d => y(inputSymbolY))
+  .attr("r", 5)
+  .attr("stroke", "black")
+  .attr("fill", d => d.color);
 </script>
