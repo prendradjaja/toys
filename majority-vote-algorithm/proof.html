@@ -1,7 +1,10 @@
 <!DOCTYPE html>
-<div id="container"></div>
+<script src="./colors.js"></script>
+<script src="./algorithm.js"></script>
+
+<div id="graph1Container"></div>
 <script type="module">
-// Created largely by generative AI.
+// Created largely by generative AI
 
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
@@ -25,43 +28,32 @@ const yAxisFontSize = "20px";
 
 const inputSymbolY = -0.8;
 
-const white = 'white';
-const blue = '#0081CD';
-const yellow = '#FEC200';
-const red = '#BC1E47';
-
 // Data
-const algorithmStates = [
-  {x: 0, y: 0, color: white, dotted: true},
-  {x: 1, y: 1, color: blue},
-  {x: 2, y: 2, color: blue},
-  {x: 3, y: 1, color: blue},
-  {x: 4, y: 2, color: blue},
-  {x: 5, y: 1, color: blue},
-  {x: 6, y: 0, color: blue},
-  {x: 7, y: 1, color: yellow},
-  {x: 8, y: 0, color: yellow},
-  {x: 9, y: 1, color: red},
-  {x: 10, y: 2, color: red},
+const rawInputSymbols = [
+  blue,
+  blue,
+  red,
+  blue,
+  red,
+  yellow,
+  yellow,
+  red,
+  red,
+  red,
 ];
-const inputSymbols = [
-  {x: 1, color: blue},
-  {x: 2, color: blue},
-  {x: 3, color: red},
-  {x: 4, color: blue},
-  {x: 5, color: red},
-  {x: 6, color: yellow},
-  {x: 7, color: yellow},
-  {x: 8, color: red},
-  {x: 9, color: red},
-  {x: 10, color: red},
-];
+const inputSymbols = rawInputSymbols.map(
+  (symbol, i) => ({
+    x: i + 1,
+    color: symbol,
+  })
+);
+const algorithmStates = getAlgorithmStates(rawInputSymbols);
 
 // Create SVG
 const svg = d3.create("svg")
   .attr("width", width)
   .attr("height", height);
-container.append(svg.node());
+graph1Container.append(svg.node());
 
 // Axes
 const x = d3.scaleLinear()
