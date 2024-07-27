@@ -5,7 +5,7 @@
 
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
-// Declare the chart dimensions and margins.
+// Config
 const width = 500;
 const height = 300;
 
@@ -23,13 +23,15 @@ const xTicksCountApprox = xMax;
 const yTicksCountApprox = yMax;
 const yAxisFontSize = "20px";
 
+const inputSymbolY = -0.8;
+
 const white = 'white';
 const blue = '#0081CD';
 const yellow = '#FEC200';
 const red = '#BC1E47';
 
-// Declare the data points.
-const data = [
+// Data
+const algorithmStates = [
     {x: 0, y: 0, color: white, dotted: true},
     {x: 1, y: 1, color: blue},
     {x: 2, y: 2, color: blue},
@@ -42,30 +44,39 @@ const data = [
     {x: 9, y: 1, color: red},
     {x: 10, y: 2, color: red},
 ];
+const inputSymbols = [
+    {x: 1, color: blue},
+    {x: 2, color: blue},
+    {x: 3, color: red},
+    {x: 4, color: blue},
+    {x: 5, color: red},
+    {x: 6, color: yellow},
+    {x: 7, color: yellow},
+    {x: 8, color: red},
+    {x: 9, color: red},
+    {x: 10, color: red},
+];
 
-// Declare the x (horizontal position) scale.
-const x = d3.scaleLinear()
-    .domain([xMin, xMax])
-    .range([marginLeft, width - marginRight]);
-
-// Declare the y (vertical position) scale.
-const y = d3.scaleLinear()
-    .domain([yMin, yMax])
-    .range([height - marginBottom, marginTop]);
-
-// Create the SVG container.
+// Create SVG
 const svg = d3.create("svg")
     .attr("width", width)
     .attr("height", height);
+container.append(svg.node());
 
-// Add the y-axis.
+// Axes
+const x = d3.scaleLinear()
+    .domain([xMin, xMax])
+    .range([marginLeft, width - marginRight]);
+const y = d3.scaleLinear()
+    .domain([yMin, yMax])
+    .range([height - marginBottom, marginTop]);
 svg.append("g")
     .attr("transform", `translate(${marginLeft},0)`)
     .call(d3.axisLeft(y).ticks(yTicksCountApprox).tickFormat(d3.format("d")))
     .selectAll("text")
     .style("font-size", yAxisFontSize);
 
-// Add grid lines
+// Grid lines
 const gridX = svg.append("g")
     .attr("class", "grid")
     .attr("transform", `translate(0,${height - marginBottom})`)
@@ -74,7 +85,6 @@ const gridX = svg.append("g")
         .tickSize(-height + marginTop + marginBottom)
         .tickFormat("")
     );
-
 const gridY = svg.append("g")
     .attr("class", "grid")
     .attr("transform", `translate(${marginLeft},0)`)
@@ -83,29 +93,26 @@ const gridY = svg.append("g")
         .tickSize(-width + marginLeft + marginRight)
         .tickFormat("")
     );
-
-// Style the grid lines
 svg.selectAll(".grid line")
     .attr("stroke", "lightgrey")
     .attr("stroke-opacity", 0.7)
 
-// Define the line generator.
+// Draw the line between points in `algorithmStates`
 const line = d3.line()
     .x(d => x(d.x))
     .y(d => y(d.y));
-
-// Add the line path.
 svg.append("path")
-    .datum(data)
+    .datum(algorithmStates)
     .attr("fill", "none")
     .attr("stroke", "black")
     .attr("stroke-width", 2)
     .attr("d", line);
 
-// Add circles for each data point.
-svg.selectAll("circle")
-    .data(data)
+// Draw the points in `algorithmStates`
+svg.selectAll("circle.algorithmStates")
+    .data(algorithmStates)
     .enter().append("circle")
+    .attr("class", "algorithmStates")
     .attr("cx", d => x(d.x))
     .attr("cy", d => y(d.y))
     .attr("r", 5)
@@ -113,8 +120,14 @@ svg.selectAll("circle")
     .attr("stroke-dasharray", d => d.dotted ? "1.5" : "none")
     .attr("fill", d => d.color);
 
-// Append the SVG element.
-container.append(svg.node());
-
+// Draw the points in `inputSymbols`
+svg.selectAll("circle.inputSymbols")
+    .data(inputSymbols)
+    .enter().append("circle")
+    .attr("class", "inputSymbols")
+    .attr("cx", d => x(d.x))
+    .attr("cy", d => y(inputSymbolY))
+    .attr("r", 5)
+    .attr("stroke", "black")
+    .attr("fill", d => d.color);
 </script>
-
