@@ -5,6 +5,10 @@ It's based on the parser and scanner from chapters 4-6 of [Crafting
 Interpreters](https://craftinginterpreters.com/contents.html), available free
 online from the author (Robert Nystrom).
 
+(See also: [My fork of Crafting
+Interpreters](https://github.com/prendradjaja/craftinginterpreters), which
+includes Nystrom's code as it looks at the end of each chapter.)
+
 
 ## What we're parsing
 
