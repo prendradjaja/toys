@@ -37,7 +37,8 @@ We want to parse expressions like these:
 
 i.e.
 
-- int literals (but no negative-int literals or unary minus!)
+- int literals
+    - No negative-int literals or unary minus! See Crafting Interpreters for an example implementation of unary minus.
 - variables
 - `+` `-` `*` `/` with operator precedence
 - `()` for grouping
