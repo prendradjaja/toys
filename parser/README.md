@@ -102,3 +102,28 @@ Some other changes:
       is what we often want `peek()` for anyway.
 (We could go farther than this; `peek()` also could raise an exception instead of returning `None`. For this example, returning `None` seemed simplest.)
 - Nystrom's scanner has both `current` and `start`, allowing `addToken()` to use those indices to find the current lexeme (as a substring of the source code). This is a great idea! I didn't need it in this case, so I left it out for simplicity.
+
+
+## Some theory
+
+[Chomsky hierarchy](https://en.wikipedia.org/wiki/Chomsky_hierarchy):
+regular -> context-free -> context-sensitive -> recursively enumerable
+
+----
+
+This lexical grammar / scanner is **regular** (no recursion in the grammar).
+It requires only **one character of lookahead.**
+
+This syntactic grammar / parser is **context-free**. Similarly, the grammar
+requires only **one token of lookahead.** It uses **recursive descent,**
+specifically **predictive parsing** i.e. this is an **LL(k) grammar**,
+specifically **LL(1)** (because one token of lookahead).
+
+[From Wikipedia:](https://en.wikipedia.org/w/index.php?title=Recursive_descent_parser&oldid=1237251514)
+
+> A predictive parser is a recursive descent parser that does not require
+> backtracking.[3] Predictive parsing is possible only for the class of LL(k)
+> grammars, which are the context-free grammars for which there exists some
+> positive integer k that allows a recursive descent parser to decide which
+> production to use by examining only the next k tokens of input. ... A
+> predictive parser runs in linear time.
