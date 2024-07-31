@@ -10,6 +10,16 @@ Interpreters](https://github.com/prendradjaja/craftinginterpreters), which
 includes Nystrom's code as it looks at the end of each chapter.)
 
 
+## Table of Contents
+
+- [What we're parsing](#what-were-parsing)
+- [About greediness etc](#about-greediness-etc)
+- [The grammar](#the-grammar)
+- [Usage, entry point, etc](#usage-entry-point-etc)
+- [Some differences from the _Crafting Interpreters_ parser and scanner](#some-differences-from-the-crafting-interpreters-parser-and-scanner)
+- [Some theory](#some-theory)
+
+
 ## What we're parsing
 
 We want to parse expressions like these:
