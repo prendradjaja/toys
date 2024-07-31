@@ -66,6 +66,19 @@ a separate rule for each precedence level." (_Crafting Interpreters_, [chapter
              | "(" expression ")" ;
 
 
+## Usage, entry point, etc
+
+See `test_parser.txt` for parser usage. For implementation, see `parser.py`. Run the tests with:
+
+    python3.12 -m doctest -f test_parser.txt
+
+This repo also contains a scanner (aka lexer aka tokenizer) used by the parser.
+
+You can run all tests (parser and scanner) with:
+
+    make test
+
+
 ## Some differences from the _Crafting Interpreters_ parser and scanner
 
 I don't think any of these change any fundamental concepts, but in case it's
