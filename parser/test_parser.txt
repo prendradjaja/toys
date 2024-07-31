@@ -1,0 +1,69 @@
+>>> from parser import parse
+>>> from scanner import scan_tokens
+>>> from tokens import TokenType as tt
+>>> from ast_nodes import Variable, Number, BinOp
+
+>>> scan_and_parse = lambda text: parse(scan_tokens(text))
+
+
+Empty input case
+>>> scan_and_parse('')
+Traceback (most recent call last):
+    ...
+Exception: parser error: unexpected end of input
+
+
+Can parse numbers and variables
+>>> scan_and_parse('0') == Number(0)
+True
+>>> scan_and_parse('123') == Number(123)
+True
+>>> scan_and_parse('x') == Variable('x')
+True
+>>> scan_and_parse('height') == Variable('height')
+True
+
+
+Can parse simple binary expressions
+>>> scan_and_parse('1 + 2') == BinOp(Number(1), tt.PLUS, Number(2))
+True
+>>> scan_and_parse('a * b') == BinOp(Variable('a'), tt.STAR, Variable('b'))
+True
+>>> scan_and_parse('20 / width') == BinOp(Number(20), tt.SLASH, Variable('width'))
+True
+
+
+Supports left-associativity
+>>> scan_and_parse('1 + 2 + 3') == BinOp(BinOp(Number(1), tt.PLUS, Number(2)), tt.PLUS, Number(3))
+True
+
+
+Supports operator precedence and parentheses
+>>> scan_and_parse('1 + 2 * 3') == BinOp(Number(1), tt.PLUS, BinOp(Number(2), tt.STAR, Number(3)))
+True
+>>> scan_and_parse('1 * 2 + 3') == BinOp(BinOp(Number(1), tt.STAR, Number(2)), tt.PLUS, Number(3))
+True
+>>> scan_and_parse('(1 + 2) * 3') == BinOp(BinOp(Number(1), tt.PLUS, Number(2)), tt.STAR, Number(3))
+True
+
+
+Error case: More tokens after complete (greedy) expression
+>>> scan_and_parse('1 + 2 3')
+Traceback (most recent call last):
+    ...
+Exception: parser error: expected end of input
+
+
+Some more error cases
+>>> scan_and_parse('1 + *')
+Traceback (most recent call last):
+    ...
+Exception: parser error: unexpected token TokenType.STAR
+>>> scan_and_parse('1 +')
+Traceback (most recent call last):
+    ...
+Exception: parser error: unexpected end of input
+>>> scan_and_parse('(1 + 1')
+Traceback (most recent call last):
+    ...
+Exception: parser error: expected ")"
