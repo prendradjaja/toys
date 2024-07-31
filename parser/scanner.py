@@ -76,6 +76,7 @@ class Scanner:
 
     def peek(self):
         if self.is_at_end():
+            # Consider raising an exception instead of returning None (See README.md)
             return None
         else:
             return self.text[self.current]

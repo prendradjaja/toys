@@ -78,4 +78,10 @@ Various names are changed, notably: (Nystrom's choice -> my choice)
 Some other changes:
 
 - In e.g. `consume()` (Nystrom's `advance()`), I raise an exception if we're already at the end of input. I think this sort of behavior makes it easier to reason about state.
+    - We could go farther than this; `peek()` returns `None` where we might
+      also expect to raise an exception. In this example, that seemed
+      simplest, but for future uses I might consider raising an exception
+      and/or replacing `peek()` with something like Nystrom`s `check()`, which
+      is what we often want `peek()` for anyway.
+(We could go farther than this; `peek()` also could raise an exception instead of returning `None`. For this example, returning `None` seemed simplest.)
 - Nystrom's scanner has both `current` and `start`, allowing `addToken()` to use those indices to find the current lexeme (as a substring of the source code). This is a great idea! I didn't need it in this case, so I left it out for simplicity.
