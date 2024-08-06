@@ -83,6 +83,8 @@ class Parser:
             return False
 
     def is_at_end(self):
+        # Consider using an EOF token:
+        # https://github.com/prendradjaja/toys/pull/4
         if self.current >= len(self.tokens):
             assert self.current == len(self.tokens)
             return True
