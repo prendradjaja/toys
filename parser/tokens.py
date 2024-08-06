@@ -10,6 +10,7 @@ class TokenType(Enum):
     RIGHT_PAREN = auto()
     NUMBER = auto()
     VARIABLE = auto()
+    EOF = auto()
 
 @dataclass
 class Token:

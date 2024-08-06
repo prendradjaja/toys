@@ -19,6 +19,7 @@ class Scanner:
     def scan_tokens(self):
         while not self.is_at_end():
             self.scan_token()
+        self.tokens.append(Token(tt.EOF))
         return self.tokens
 
     def scan_token(self):

@@ -15,9 +15,7 @@ class Parser:
 
     def parse(self):
         result = self.parse_program()
-        if self.current < len(self.tokens):
-            raise Exception('parser error: expected end of input')
-        assert self.current == len(self.tokens)
+        assert self.is_at_end()
         return result
 
     def parse_program(self):
@@ -65,11 +63,7 @@ class Parser:
             raise Exception('parser error: tried to consume beyond end of input')
 
     def peek(self):
-        if self.is_at_end():
-            # Consider raising an exception instead of returning None (See README.md)
-            return None
-        else:
-            return self.tokens[self.current]
+        return self.tokens[self.current]
 
     def previous(self):
         return self.tokens[self.current - 1]
@@ -83,8 +77,5 @@ class Parser:
             return False
 
     def is_at_end(self):
-        if self.current >= len(self.tokens):
-            assert self.current == len(self.tokens)
-            return True
-        else:
-            return False
+        token = self.peek()
+        return token and token.type == tt.EOF

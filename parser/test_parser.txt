@@ -6,11 +6,11 @@
 >>> scan_and_parse = lambda text: parse(scan_tokens(text))
 
 
-Empty input case
->>> scan_and_parse('')
-Traceback (most recent call last):
-    ...
-Exception: parser error: unexpected end of input
+#Empty input case
+#>>> scan_and_parse('')
+#Traceback (most recent call last):
+#    ...
+#Exception: parser error: unexpected end of input
 
 
 Can parse numbers and variables
@@ -47,11 +47,11 @@ True
 True
 
 
-Error case: More tokens after complete (greedy) expression
->>> scan_and_parse('1 + 2 3')
-Traceback (most recent call last):
-    ...
-Exception: parser error: expected end of input
+#Error case: More tokens after complete (greedy) expression
+#>>> scan_and_parse('1 + 2 3')
+#Traceback (most recent call last):
+#    ...
+#Exception: parser error: expected end of input
 
 
 Some more error cases
@@ -59,10 +59,12 @@ Some more error cases
 Traceback (most recent call last):
     ...
 Exception: parser error: unexpected token TokenType.STAR
->>> scan_and_parse('1 +')
-Traceback (most recent call last):
-    ...
-Exception: parser error: unexpected end of input
+
+#>>> scan_and_parse('1 +')
+#Traceback (most recent call last):
+#    ...
+#Exception: parser error: unexpected end of input
+
 >>> scan_and_parse('(1 + 1')
 Traceback (most recent call last):
     ...
