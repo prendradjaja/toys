@@ -2,19 +2,20 @@ import * as fs from 'fs';
 
 const template = fs.readFileSync('template.txt', 'utf8');
 
-const digitWidth = 3;
+const verticalOffsetPerDigit = -2;
+const horizontalOffsetPerDigit = 2;
 
 const whichSegments: Partial<Record<string, number[]>> = {
-  '0': [0, 1, 3, 4, 5, 6],
-  '1': [3, 6],
-  '2': [0, 2, 3, 4, 5],
-  '3': [0, 2, 3, 5, 6],
-  '4': [1, 2, 3, 6],
-  '5': [0, 1, 2, 5, 6],
-  '6': [0, 1, 2, 4, 5, 6],
-  '7': [0, 3, 6],
-  '8': [0, 1, 2, 3, 4, 5, 6],
-  '9': [0, 1, 2, 3, 6],
+  '0': [0, 2, 1, 5, 6, 4],
+  '1': [1, 4],
+  '2': [0, 3, 1, 5, 6],
+  '3': [0, 3, 1, 6, 4],
+  '4': [2, 3, 1, 4],
+  '5': [0, 2, 3, 6, 4],
+  '6': [0, 2, 3, 5, 6, 4],
+  '7': [0, 1, 4],
+  '8': [0, 2, 3, 1, 5, 6, 4],
+  '9': [0, 2, 3, 1, 4]
 };
 
 type Image = ImageChar[];
@@ -26,6 +27,7 @@ interface ImageChar {
 
 function main() {
   showDigits(1234567890);
+  showDigits(314159265);
 }
 
 function makeDigitImage(n: string): Image {
@@ -58,11 +60,11 @@ function makeDigitImage(n: string): Image {
 function showDigits(n: number): void {
   const digitChars = Array.from(n.toString());
   const fullImage: Image = [];
-  let offset = 0;
+  let i = 0;
   for (let digitImage of digitChars.map(makeDigitImage)) {
-    digitImage = shift(digitImage, offset);
+    digitImage = shift(digitImage, verticalOffsetPerDigit * i, horizontalOffsetPerDigit * i);
     fullImage.push(...digitImage);
-    offset += digitWidth;
+    i++;
   }
 
   let rmin = Infinity;
@@ -90,9 +92,10 @@ function showDigits(n: number): void {
   }
 }
 
-function shift(image: Image, horiontalOffset: number) {
+function shift(image: Image, verticalOffset: number, horiontalOffset: number) {
   return image.map(imageChar => ({
     ...imageChar,
+    r: imageChar.r + verticalOffset,
     c: imageChar.c + horiontalOffset,
   }));
 }
