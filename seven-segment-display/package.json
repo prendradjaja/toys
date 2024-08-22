@@ -1,0 +1,15 @@
+{
+  "name": "seven-segment-display",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "tsx index.ts",
+    "typecheck-watch": "tsc --noEmit --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "tsx": "^4.17.0",
+    "typescript": "^5.5.4"
+  }
+}
