@@ -1,8 +1,6 @@
-const template = (
-  ' _ \n' + //  0
-  '|_|\n' + // 123
-  '|_|\n'   // 456
-);
+import * as fs from 'fs';
+
+const template = fs.readFileSync('template.txt', 'utf8');
 
 const digitHeight = 3;
 
