@@ -24,7 +24,7 @@ const whichSegments: Partial<Record<string, number[]>> = {
 type DigitImage = string[];
 
 function main() {
-  showDigits(1234567890);
+  showDigits('1234567890');
 }
 
 function makeDigitImage(n: string): DigitImage {
@@ -53,9 +53,8 @@ function makeDigitImage(n: string): DigitImage {
   return result;
 }
 
-function showDigits(n: number): void {
-  const digitChars = Array.from(n.toString());
-  const digitImages = digitChars.map(makeDigitImage);
+function showDigits(s: string): void {
+  const digitImages = Array.from(s).map(makeDigitImage);
   for (let i = 0; i < digitHeight; i++) {
     let line = '';
     for (const image of digitImages) {

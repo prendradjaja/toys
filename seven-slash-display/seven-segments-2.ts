@@ -25,7 +25,7 @@ interface ImageChar {
 }
 
 function main() {
-  showDigits(1234567890);
+  showDigits('1234567890');
 }
 
 function makeDigitImage(n: string): Image {
@@ -55,11 +55,10 @@ function makeDigitImage(n: string): Image {
   return result;
 }
 
-function showDigits(n: number): void {
-  const digitChars = Array.from(n.toString());
+function showDigits(s: string): void {
   const fullImage: Image = [];
   let offset = 0;
-  for (let digitImage of digitChars.map(makeDigitImage)) {
+  for (let digitImage of Array.from(s).map(makeDigitImage)) {
     digitImage = shift(digitImage, offset);
     fullImage.push(...digitImage);
     offset += digitWidth;
