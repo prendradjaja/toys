@@ -2,7 +2,6 @@
   "name": "seven-segment-display",
   "version": "1.0.0",
   "scripts": {
-    "start": "tsx index.ts",
     "typecheck-watch": "tsc --noEmit --watch"
   },
   "author": "",

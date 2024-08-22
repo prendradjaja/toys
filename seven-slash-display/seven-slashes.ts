@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 
-const template = fs.readFileSync('template.txt', 'utf8');
+const template = fs.readFileSync('template-seven-slashes.txt', 'utf8');
 
 const verticalOffsetPerDigit = -2;
 const horizontalOffsetPerDigit = 2;
